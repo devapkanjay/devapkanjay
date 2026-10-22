@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#047857">
+
+<title>WhatsApp Link Generator</title>
+
+<style>
+:root {
+    --green: #00c875;
+    --dark: #047857;
+    --deep: #064e3b;
+    --bg: #f4faf7;
+    --text: #15372e;
+    --muted: #7b9188;
+    --border: #e2eee8;
+    --red: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 0 0, #d9fff0, transparent 28%),
+        radial-gradient(circle at 100% 40%, #e0f8ed, transparent 25%),
+        var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button, textarea {
+    font: inherit;
+}
+
+button, a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+    max-width: 850px;
+    margin: auto;
+    animation: pageIn .6s ease both;
+}
+
+/* HEADER */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    border-radius: 26px;
+    color: white;
+    background: linear-gradient(135deg, #064e3b, #047857 55%, #00a86b);
+    box-shadow: 0 18px 45px #04785730;
+    margin-bottom: 22px;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -80px;
+    top: -120px;
+    border: 35px solid #ffffff12;
+    border-radius: 50%;
+}
+
+.brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 19px;
+    background: #ffffff20;
+    border: 1px solid #ffffff35;
+    font-size: 29px;
+}
+
+.hero h1 {
+    font-size: clamp(23px, 5vw, 32px);
+    font-weight: 800;
+    letter-spacing: -.8px;
+    line-height: 1.2;
+}
+
+.hero h1 span {
+    color: #8dfac3;
+}
+
+.hero p {
+    position: relative;
+    z-index: 1;
+    color: #ffffffcc;
+    line-height: 1.7;
+    font-size: 14px;
+    margin-top: 17px;
+}
+
+.status {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 19px;
+    padding: 8px 12px;
+    border-radius: 30px;
+    background: #ffffff15;
+    border: 1px solid #ffffff20;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #86efac;
+    box-shadow: 0 0 10px #86efac;
+}
+
+/* PANELS */
+
+.panel {
+    background: #ffffffed;
+    border: 1px solid #e2eee8e6;
+    border-radius: 22px;
+    padding: 23px;
+    box-shadow: 0 12px 35px #0478570b;
+    margin-bottom: 18px;
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.heading-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: #e4fbef;
+    font-size: 20px;
+}
+
+.panel-heading h2 {
+    font-size: 17px;
+}
+
+.panel-heading p {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* INPUT */
+
+.field {
+    margin-bottom: 19px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.field-hint {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 135px;
+    padding: 15px;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    background: #fbfefc;
+    color: var(--text);
+    outline: none;
+    resize: vertical;
+    font-size: 14px;
+    line-height: 1.8;
+    transition: border-color .25s, box-shadow .25s;
+}
+
+textarea::placeholder {
+    color: #a5b7ae;
+}
+
+textarea:focus {
+    border-color: #34d399;
+    background: white;
+    box-shadow: 0 0 0 4px #34d39920;
+}
+
+#message {
+    min-height: 125px;
+}
+
+#targetNumber {
+    min-height: 65px;
+    resize: vertical;
+}
+
+.helper {
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.counter {
+    text-align: right;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 7px;
+}
+
+/* BUTTONS */
+
+button, .open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+button:active, .open:active {
+    transform: scale(.975);
+}
+
+.primary {
+    width: 100%;
+    min-height: 53px;
+    color: white;
+    background: linear-gradient(120deg, #00c875, #008f60);
+    box-shadow: 0 8px 20px #00c87530;
+}
+
+.primary:hover {
+    box-shadow: 0 10px 25px #00c87545;
+    transform: translateY(-2px);
+}
+
+.secondary {
+    color: white;
+    background: #075e54;
+}
+
+.secondary:hover {
+    background: #064e3b;
+}
+
+.danger {
+    color: #dc2626;
+    background: #fff0f0;
+    border: 1px solid #fee2e2;
+}
+
+.danger:hover {
+    background: #ffe4e4;
+}
+
+.copy {
+    color: #047857;
+    background: #e9fbf1;
+    border: 1px solid #d2f5e0;
+}
+
+.copy:hover {
+    background: #d8f9e6;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 11px;
+    margin-top: 11px;
+}
+
+.button-grid button {
+    min-height: 48px;
+}
+
+/* RESULTS */
+
+.result-panel {
+    display: none;
+}
+
+.result-panel.show {
+    display: block;
+    animation: slideUp .4s ease both;
+}
+
+.result-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 17px;
+}
+
+.result-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.result-symbol {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: #e4fbef;
+    font-size: 21px;
+}
+
+.result-title h2 {
+    font-size: 18px;
+}
+
+.result-title p {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    background: #e7f9ee;
+    color: #047857;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.copy-all {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.card-list {
+    display: grid;
+    gap: 11px;
+}
+
+.number-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: white;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    animation: slideUp .4s ease both;
+}
+
+.number-card:hover {
+    border-color: #a7f3d0;
+    box-shadow: 0 5px 20px #04785710;
+    transform: translateY(-2px);
+}
+
+.number-badge {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(145deg, #10b981, #047857);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.number-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.number-info strong {
+    display: block;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.number-info small {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.card-actions button, .card-actions .open {
+    padding: 10px 11px;
+    font-size: 10px;
+    border-radius: 9px;
+}
+
+.open {
+    background: #e6faee;
+    color: #047857;
+    border: 1px solid #d0f3df;
+}
+
+.open:hover {
+    background: #d2f7e1;
+}
+
+/* NOTICE */
+
+.notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 17px;
+    border: 1px solid #d6f5e4;
+    border-radius: 15px;
+    background: #f0fcf5;
+}
+
+.notice-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #d8f8e5;
+    font-size: 16px;
+}
+
+.notice h3 {
+    font-size: 12px;
+    margin: 2px 0 6px;
+}
+
+.notice p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #5c8170;
+    overflow-wrap: anywhere;
+}
+
+.footer {
+    text-align: center;
+    padding: 14px 5px 0;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.footer span {
+    color: #047857;
+    font-weight: 700;
+}
+
+/* TOAST */
+
+.toast {
+    position: fixed;
+    z-index: 1000;
+    bottom: 25px;
+    left: 50%;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    padding: 13px 18px;
+    color: white;
+    background: #064e3b;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 650;
+    box-shadow: 0 10px 35px #064e3b35;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 20px);
+    transition: opacity .25s, transform .25s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* ANIMATIONS */
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    body {
+        padding: 13px 11px 30px;
+    }
+
+    .hero {
+        padding: 23px 19px;
+        border-radius: 22px;
+        margin-bottom: 15px;
+    }
+
+    .logo {
+        width: 49px;
+        height: 49px;
+        border-radius: 15px;
+        font-size: 24px;
+    }
+
+    .brand {
+        gap: 11px;
+    }
+
+    .hero p {
+        font-size: 12px;
+    }
+
+    .panel {
+        padding: 17px 14px;
+        border-radius: 19px;
+        margin-bottom: 14px;
+    }
+
+    .panel-heading h2 {
+        font-size: 15px;
+    }
+
+    textarea {
+        font-size: 13px;
+        min-height: 130px;
+    }
+
+    .button-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .button-grid button {
+        min-height: 47px;
+    }
+
+    .number-card {
+        display: grid;
+        grid-template-columns: 36px minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .card-actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .card-actions button, .card-actions .open {
+        width: 100%;
+        min-height: 39px;
+        font-size: 10px;
+    }
+
+    .result-title h2 {
+        font-size: 16px;
+    }
+
+    .copy-all {
+        font-size: 11px;
+    }
+
+    .notice {
+        padding: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="app">
+
+    <!-- HEADER -->
+    <header class="hero">
+        <div class="brand">
+            <div class="logo" aria-hidden="true">💬</div>
+            <div>
+                <h1>WhatsApp <span>Link Generator</span></h1>
+            </div>
+        </div>
+
+        <p>
+            Buat link WhatsApp dengan mudah. Masukkan daftar nomor,
+            tulis pesan, pilih nomor tujuan, lalu buka chat dalam satu klik.
+        </p>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            GENERATOR SIAP DIGUNAKAN
+        </div>
+    </header>
+
+    <!-- FORM -->
+    <section class="panel">
+
+        <div class="panel-heading">
+            <div class="heading-icon">✍️</div>
+            <div>
+                <h2>Buat Link WhatsApp</h2>
+                <p>Isi nomor tujuan chat dan pesan yang ingin disiapkan.</p>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="label-row">
+                <label for="numbers">📱 Daftar Nomor WhatsApp</label>
+                <span class="field-hint">Banyak nomor</span>
+            </div>
+
+            <textarea
+                id="numbers"
+                placeholder="Isi nomor"
+                autocomplete="off"
+                spellcheck="false"
+            ></textarea>
+
+            <p class="helper">
+                Masukkan satu nomor per baris. Nomor Indonesia atau luar negeri.
+            </p>
+        </div>
+
+        <div class="field">
+            <div class="label-row">
+                <label for="message">💬 Isi Pesan</label>
+                <span class="field-hint" id="charCount">0 karakter</span>
+            </div>
+
+            <textarea
+                id="message"
+                placeholder="Halo, apa kabar?&#10;&#10;Saya ingin menghubungi kamu..."
+                maxlength="4000"
+            ></textarea>
+
+            <p class="helper">
+                Pesan ini akan dimasukkan ke setiap link WhatsApp yang dibuat.
+            </p>
+        </div>
+
+        <!-- NOMOR TUJUAN MANUAL -->
+        <div class="field">
+            <div class="label-row">
+                <label for="targetNumber">📲 Isi nomor kamu (opsional)</label>
+                <span class="field-hint">Pilih sendiri</span>
+            </div>
+
+            <textarea
+                id="targetNumber"
+                placeholder="Isi nomor kamu (opsional)"
+                inputmode="tel"
+                autocomplete="tel"
+                spellcheck="false"
+                style="min-height:65px"
+            ></textarea>
+
+            <p class="helper">
+               Ini cuma buat daft link supaya ada di nomor anda sendiri.
+            </p>
+        </div>
+
+        <button class="primary" id="generateBtn" type="button">
+            ✦ BUAT LINK WHATSAPP →
+        </button>
+
+        <div class="button-grid">
+            <button class="secondary" id="sendBtn" type="button">
+                ↗ KIRIM MANUAL KE NOMOR PILIHAN
+            </button>
+
+            <button class="danger" id="resetBtn" type="button">
+                ↻ RESET SEMUA
+            </button>
+        </div>
+
+    </section>
+
+    <!-- HASIL -->
+    <section class="panel result-panel" id="resultPanel">
+
+        <div class="result-top">
+            <div class="result-title">
+                <div class="result-symbol">🔗</div>
+                <div>
+                    <h2>Hasil Link</h2>
+                    <p id="resultDescription">Link siap digunakan.</p>
+                </div>
+            </div>
+
+            <span class="badge" id="resultBadge">0 NOMOR</span>
+        </div>
+
+        <button class="primary copy-all" id="copyAllBtn" type="button">
+            ▣ SALIN SEMUA LINK
+        </button>
+
+        <div class="card-list" id="cardList"></div>
+
+        <div class="notice">
+            <div class="notice-icon">ℹ️</div>
+            <div>
+                <h3>Informasi Pengiriman Manual</h3>
+                <p>
+                    Kamu bebas menentukan Isi nomor kamu (opsional).
+                </p>
+                <p>
+                    WhatsApp akan membuka chat dengan pesan yang sudah
+                    disiapkan. Tekan tombol kirim di WhatsApp untuk
+                    mengirimnya secara manual.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        
+    </footer>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+let generatedLinks = [];
+let toastTimer;
+
+const numbersInput = document.getElementById("numbers");
+const messageInput = document.getElementById("message");
+const targetInput = document.getElementById("targetNumber");
+const resultPanel = document.getElementById("resultPanel");
+const cardList = document.getElementById("cardList");
+const charCount = document.getElementById("charCount");
+const toastElement = document.getElementById("toast");
+
+/* NOTIFIKASI */
+
+function showToast(message) {
+    toastElement.textContent = message;
+    toastElement.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toastElement.classList.remove("show");
+    }, 2600);
+}
+
+/* NORMALISASI NOMOR */
+
+function normalizeNumber(input) {
+    let number = input.replace(/\D/g, "");
+
+    if (number.startsWith("00")) {
+        number = number.slice(2);
+    }
+
+    if (number.startsWith("0")) {
+        number = "62" + number.slice(1);
+    } else if (number.startsWith("8")) {
+        number = "62" + number;
+    }
+
+    return number;
+}
+
+function isValidNumber(number) {
+    return /^\d{10,15}$/.test(number);
+}
+
+/* GENERATE LINK */
+
+function generateLinks() {
+    const rawNumbers = numbersInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!rawNumbers) {
+        showToast("Masukkan daftar nomor terlebih dahulu.");
+        numbersInput.focus();
+        return;
+    }
+
+    if (!message) {
+        showToast("Isi pesan tidak boleh kosong.");
+        messageInput.focus();
+        return;
+    }
+
+    const entries = rawNumbers
+        .split(/[\n,;|]+/)
+        .map(item => item.trim())
+        .filter(Boolean);
+
+    const normalized = entries.map(normalizeNumber);
+    const validNumbers = normalized.filter(isValidNumber);
+    const invalidCount = normalized.length - validNumbers.length;
+    const uniqueNumbers = [...new Set(validNumbers)];
+
+    if (uniqueNumbers.length === 0) {
+        showToast("Tidak ditemukan nomor dengan format valid.");
+        return;
+    }
+
+    generatedLinks = uniqueNumbers.map(number => ({
+        number,
+        url: "https://wa.me/" + number +
+             "?text=" + encodeURIComponent(message)
+    }));
+
+    renderResults(invalidCount);
+
+    resultPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+    if (invalidCount > 0) {
+        showToast(
+            uniqueNumbers.length + " link dibuat. " +
+            invalidCount + " input dilewati."
+        );
+    } else {
+        showToast("Berhasil membuat " + uniqueNumbers.length + " link!");
+    }
+}
+
+/* TAMPILKAN HASIL */
+
+function renderResults(invalidCount = 0) {
+    cardList.replaceChildren();
+
+    document.getElementById("resultBadge").textContent =
+        generatedLinks.length + " NOMOR";
+
+    document.getElementById("resultDescription").textContent =
+        generatedLinks.length + " link siap dibuka atau disalin." +
+        (invalidCount > 0
+            ? " " + invalidCount + " input dilewati."
+            : "");
+
+    generatedLinks.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "number-card";
+        card.style.animationDelay = Math.min(index * 35, 350) + "ms";
+
+        const badge = document.createElement("div");
+        badge.className = "number-badge";
+        badge.textContent = index + 1;
+
+        const info = document.createElement("div");
+        info.className = "number-info";
+
+        const numberTitle = document.createElement("strong");
+        numberTitle.textContent = "+" + item.number;
+
+        const description = document.createElement("small");
+        description.textContent = "Link WhatsApp siap digunakan";
+
+        info.append(numberTitle, description);
+
+        const actions = document.createElement("div");
+        actions.className = "card-actions";
+
+        const openButton = document.createElement("a");
+        openButton.className = "open";
+        openButton.href = item.url;
+        openButton.target = "_blank";
+        openButton.rel = "noopener noreferrer";
+        openButton.textContent = "↗ BUKA CHAT";
+
+        const copyButton = document.createElement("button");
+        copyButton.type = "button";
+        copyButton.className = "copy";
+        copyButton.textContent = "▣ SALIN LINK";
+
+        copyButton.addEventListener("click", () => {
+            copyText(item.url);
+        });
+
+        actions.append(openButton, copyButton);
+        card.append(badge, info, actions);
+        cardList.appendChild(card);
+    });
+
+    resultPanel.classList.add("show");
+}
+
+/* SALIN TEKS */
+
+async function copyText(text) {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            const area = document.createElement("textarea");
+
+            area.value = text;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.left = "-9999px";
+            area.style.top = "0";
+
+            document.body.appendChild(area);
+            area.select();
+
+            const success = document.execCommand("copy");
+            area.remove();
+
+            if (!success) {
+                throw new Error("Penyalinan gagal");
+            }
+        }
+
+        showToast("Berhasil disalin!");
+    } catch (error) {
+        showToast("Gagal menyalin. Coba lagi.");
+    }
+}
+
+/* SALIN SEMUA LINK */
+
+function copyAllLinks() {
+    if (generatedLinks.length === 0) {
+        showToast("Buat link terlebih dahulu.");
+        return;
+    }
+
+    copyText(
+        generatedLinks.map(item => item.url).join("\n")
+    );
+}
+
+/* KIRIM MANUAL KE NOMOR PILIHAN */
+
+function sendToSelectedNumber() {
+    if (generatedLinks.length === 0) {
+        showToast("Buat link WhatsApp terlebih dahulu.");
+        return;
+    }
+
+    const rawTarget = targetInput.value.trim();
+
+    if (!rawTarget) {
+        showToast("Masukkan nomor tujuan terlebih dahulu.");
+        targetInput.focus();
+        return;
+    }
+
+    let targetNumber = rawTarget.replace(/\D/g, "");
+
+    if (targetNumber.startsWith("00")) {
+        targetNumber = targetNumber.slice(2);
+    } else if (targetNumber.startsWith("0")) {
+        targetNumber = "62" + targetNumber.slice(1);
+    } else if (targetNumber.startsWith("8")) {
+        targetNumber = "62" + targetNumber;
+    }
+
+    if (!isValidNumber(targetNumber)) {
+        showToast("Format nomor tujuan tidak valid.");
+        targetInput.focus();
+        return;
+    }
+
+    const message =
+        "DAFTAR LINK WHATSAPP\n\n" +
+        generatedLinks.map((item, index) =>
+            (index + 1) + ". +" + item.number +
+            "\n" + item.url
+        ).join("\n\n");
+
+    const url =
+        "https://wa.me/" + targetNumber +
+        "?text=" + encodeURIComponent(message);
+
+    // Membuka chat. Pengguna tetap mengirim pesan secara manual.
+    window.open(url, "_blank");
+
+    showToast("Chat WhatsApp sedang dibuka.");
+}
+
+/* RESET */
+
+function resetForm() {
+    if (
+        !numbersInput.value.trim() &&
+        !messageInput.value.trim() &&
+        !targetInput.value.trim() &&
+        generatedLinks.length === 0
+    ) {
+        showToast("Form sudah kosong.");
+        return;
+    }
+
+    if (!confirm("Yakin ingin menghapus semua nomor, pesan, dan hasil?")) {
+        return;
+    }
+
+    numbersInput.value = "";
+    messageInput.value = "";
+    targetInput.value = "";
+    generatedLinks = [];
+
+    charCount.textContent = "0 karakter";
+
+    cardList.replaceChildren();
+    resultPanel.classList.remove("show");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    showToast("Semua data berhasil direset.");
+}
+
+/* HITUNG KARAKTER */
+
+messageInput.addEventListener("input", () => {
+    charCount.textContent = messageInput.value.length + " karakter";
+});
+
+/* EVENT TOMBOL */
+
+document.getElementById("generateBtn")
+    .addEventListener("click", generateLinks);
+
+document.getElementById("copyAllBtn")
+    .addEventListener("click", copyAllLinks);
+
+document.getElementById("sendBtn")
+    .addEventListener("click", sendToSelectedNumber);
+
+document.getElementById("resetBtn")
+    .addEventListener("click", resetForm);
+
+</script>
+
+</body>
+</html>
