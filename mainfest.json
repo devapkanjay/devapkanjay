@@ -1,0 +1,19 @@
+{
+"id": "/devapkanjay/",
+"name": "GLWA - Generator Link WhatsApp",
+"short_name": "GLWA",
+"description": "Generator Link WhatsApp",
+"start_url": "/devapkanjay/",
+"scope": "/devapkanjay/",
+"display": "standalone",
+"background_color": "#075e54",
+"theme_color": "#128c7e",
+"icons": [
+{
+"src": "icons/icon-512.png",
+"sizes": "512x512",
+"type": "image/png",
+"purpose": "any"
+}
+]
+}
